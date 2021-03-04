@@ -1,0 +1,26 @@
+{
+  "name": "use-toast-provider",
+  "version": "0.0.4",
+  "description": "",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf build && tsc"
+  },
+  "keywords": [],
+  "author": "dana",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.5.1"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.13.0",
+    "@types/node": "^14.14.31",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "@types/react-test-renderer": "^17.0.1",
+    "typescript": "^4.2.2"
+  }
+}
