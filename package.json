@@ -1,6 +1,6 @@
 {
   "name": "use-toast-provider",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "",
   "main": "build/index.js",
   "types": "build/index.d.ts",

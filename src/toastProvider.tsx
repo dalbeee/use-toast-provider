@@ -9,13 +9,32 @@ interface ToastItem {
 }
 
 type Push = (item: ToastItem) => void;
+type Spread = () => JSX.Element;
+type useToastType = ReturnType<typeof useToast>;
 
-interface IContextProps {
-  push: Push;
-  spread: () => void;
-}
+const useToast = () => {
+  const [store, setStore] = useState<ToastItem[]>([]);
 
-const ToastContext = createContext<IContextProps>({} as IContextProps);
+  const push: Push = (item) => {
+    setStore((prev) => prev.concat(item));
+  };
+
+  const spread: Spread = () => {
+    return (
+      <>
+        {!!store.length &&
+          store.map((item) => {
+            return <ToastComponent {...item} key={item.timestamp} />;
+          })}
+      </>
+    );
+  };
+
+  const operation = { push, spread };
+  return { operation };
+};
+
+const ToastContext = createContext<useToastType | null>({} as useToastType);
 
 const ToastComponent = ({ title, content, timestamp }: ToastItem) => {
   const [time, setTime] = useState<number>();
@@ -46,27 +65,10 @@ const ToastComponent = ({ title, content, timestamp }: ToastItem) => {
 };
 
 export const ToastProvider: React.FC = ({ children }) => {
-  const [store, setStore] = useState<ToastItem[]>([]);
-
-  const push: Push = (item) => {
-    setStore((prev) => prev.concat(item));
-  };
-
-  const spread = () => {
-    return (
-      <>
-        {!!store.length &&
-          store.map((item) => {
-            return <ToastComponent {...item} key={item.timestamp} />;
-          })}
-      </>
-    );
-  };
+  const useHooks = useToast();
 
   return (
-    <ToastContext.Provider value={{ push, spread }}>
-      {children}
-    </ToastContext.Provider>
+    <ToastContext.Provider value={useHooks}>{children}</ToastContext.Provider>
   );
 };
 
